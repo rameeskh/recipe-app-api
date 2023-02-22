@@ -1,9 +1,9 @@
-version: "3.9" 
+version: "3.9" # docker compose version
 
 
 services:
   app:
-    build:
+    build: 
       context: .
       args:
         - DEV=true
