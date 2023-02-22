@@ -24,7 +24,10 @@ RUN python -m venv /py && \
         --no-create-home \
         django-user
 
+RUN ls -la
 
 ENV PATH="/py/bin:$PATH"
 
 USER django-user
+
+# RUN sudo chown -R django-user /app
