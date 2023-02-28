@@ -9,7 +9,7 @@ from core import models
 
 class UserAdmin(BaseUserAdmin):
     """Define admin page for users."""
-    order = ['id']
+    ordering = ['id']
     list_display = ['email', 'name']
 
 
