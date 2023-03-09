@@ -49,8 +49,8 @@ class PrivateIngredientApiTests(TestCase):
 
     def test_retrieve_ingredients(self):
         """test for retrieving ingredients by authenticated requests"""
-        Ingredient.object.create(user=self.user, name='Vanilla')
-        Ingredient.object.create(user=self.user, name='Rice')
+        Ingredient.objects.create(user=self.user, name='Vanilla')
+        Ingredient.objects.create(user=self.user, name='Rice')
 
         res = self.client.get(INGREDIENT_URL)
 
@@ -63,7 +63,7 @@ class PrivateIngredientApiTests(TestCase):
         """Test list of ingredients limited to authenticated user"""
         user2 = create_user(email='user2@example.com')
         Ingredient.objects.create(user=user2, name='salt')
-        ingredient = Ingredient.object.create(user=self.user, name='Pepper')
+        ingredient = Ingredient.objects.create(user=self.user, name='Pepper')
 
         res = self.client.get(INGREDIENT_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
