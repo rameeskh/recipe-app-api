@@ -348,3 +348,18 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         new_ingredient = Ingredient.objects.get(user=self.user, name='Lemon')
         self.assertIn(new_ingredient, recipe.ingredients.all())
+
+    def test_update_recipe_assign_ingredient(self):
+        """Test assigning an exisiting ingredient when updating a recipe."""
+        ingredient_lime = Ingredient.objects.create(user=self.user, name='Lime')
+        recipe = create_recipe(user=self.user)
+        recipe.ingredients.add(ingredient_lime)
+
+        ingredient_lettuce = Ingredient.objects.create(user=self.user, name='Lettuce')
+        payload = {'ingredients': [{'name': 'Lettuce'}]}
+        url = detail_url(recipe.id)
+        res = self.client.patch(url, payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn(ingredient_lettuce, recipe.ingredients.all())
+        self.assertNotIn(ingredient_lime, recipe.ingredients.all())
