@@ -36,7 +36,7 @@ def detail_url(recipe_id):
 
 def image_upload_url(recipe_id):
     """create and return an image upload url"""
-    return reverse('recipe:recipe-detail', args=[recipe_id])
+    return reverse('recipe:recipe-upload-image', args=[recipe_id])
 
 
 def create_recipe(user, **params):
@@ -414,7 +414,7 @@ class ImageUploadTests(TestCase):
         with tempfile.NamedTemporaryFile(suffix='.jpg') as image_file:
             img = Image.new('RGB', (10, 10))
             img.save(image_file, format='JPEG')
-            img.file.seek(0)
+            image_file.seek(0)
             payload = {'image': image_file}
             res = self.client.post(url, payload, format='multipart')
 
@@ -426,7 +426,7 @@ class ImageUploadTests(TestCase):
     def test_upload_image_bad_request(self):
         """test uploading invalid image"""
         url = image_upload_url(self.recipe.id)
-        payload = {'image': 'not an image'}
+        payload = {'image': 'notanimage'}
         res = self.client.post(url, payload, format='multipart')
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
