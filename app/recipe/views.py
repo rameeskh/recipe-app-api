@@ -1,6 +1,12 @@
 """
 Views for Recipe APIs
 """
+from drf_spectacular.utils import (
+    extend_schema_view,
+    extend_schema,
+    OpenApiParameter,
+    OpenApiTypes,
+)
 from rest_framework import (
     viewsets,
     mixins,
@@ -25,6 +31,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def _params_to_ints(self, qs):
+        """Convert a list of strings to integers"""
+        return [int(str_id) for str_id in qs.split(',')]
 
     def get_queryset(self):
         """retrieve recipes for authenticated users"""
