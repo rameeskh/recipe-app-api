@@ -416,10 +416,10 @@ class PrivateRecipeApiTests(TestCase):
         """test filtering recipes by Ingredients"""
         r1 = create_recipe(user=self.user, title='Thai vegetable curry')
         r2 = create_recipe(user=self.user, title='Butter chicken')
-        ingredient1 = Tag.objects.create(user=self.user, name='vegetables')
-        ingredient2 = Tag.objects.create(user=self.user, name='chicken')
-        r1.tags.add(ingredient1)
-        r2.tags.add(ingredient2)
+        ingredient1 = Ingredient.objects.create(user=self.user, name='vegetables')
+        ingredient2 = Ingredient.objects.create(user=self.user, name='chicken')
+        r1.ingredients.add(ingredient1)
+        r2.ingredients.add(ingredient2)
         r3 = create_recipe(user=self.user, title='Fish and chips')
 
         params = {'ingredients': f'{ingredient1.id},{ingredient2.id}'}
