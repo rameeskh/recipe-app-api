@@ -1,4 +1,4 @@
-version: "3.9" # docker compose version
+version: "3.9" 
 
 
 services:
@@ -13,8 +13,8 @@ services:
       - ./app:/app
       - dev-static-data:/vol/web
     command: >
-      sh -c "python manage.py wait_for_db && 
-             python manage.py migrate && configs:
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_HOST=db
